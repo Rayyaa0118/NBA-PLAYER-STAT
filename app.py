@@ -1,4 +1,4 @@
-#app.py
+
 
 import streamlit as st
 import pandas as pd
@@ -6,8 +6,8 @@ import sqlite3
 import matplotlib.pyplot as plt
 from matplotlib.font_manager import FontProperties
 
-st.title(" goat🐐 Victor Wembanyama’s  Performance Tracker")
-st.write("This is an automatically updated NBA player performance tracking system.")
+st.title("  Victor Wembanyama’s  Performance  In the Last Five Games")
+st.write("This is an automatically updated NBA player(Victor Wembanyama’s) performance tracking system , which shows the data of PPM and BLK" )
 
 
 
@@ -19,9 +19,9 @@ def load_data():                                               #從 SQLite 資�
 
 def visualize(df):                                         #設一個參數df，這個參數在之後要接收 load_data() 函數讀取到的 DataFrame 資料，然後在這個函數裡面進行資料視覺化的處理
     fig, ax = plt.subplots(figsize=(10, 5))
-    ax.plot(df['GAME_DATE'], df['PTS'], marker='o', color='purple', label='Score (PTS)')
+    ax.plot(df['GAME_DATE'], df['PPM'], marker='o', color='purple', label='Points Per Minute (PPM)')
     ax.plot(df['GAME_DATE'], df['BLK'], marker='s', color='orange', label='Blocking (BLK)')
-    ax.set_title("Wembanyama Performance Trend (2024-25 Season)")
+    ax.set_title("Wembanyama Performance Trend (2025-26 Season)")
     ax.set_xlabel("Game Date")
     ax.set_ylabel("Stats")
     ax.legend()
@@ -34,15 +34,14 @@ try:
     data = load_data()
     
     st.subheader("Latest match data review")
-    st.dataframe(data.tail(5)) # 顯示最後五場
+    st.dataframe(data) 
     
     # 展示視覺化圖表
-    st.subheader("Scoring and Blocking Trend Chart")
-    fig = visualize(data)
+    st.subheader("PPM and BLK Trend Chart")
+    fig = visualize(data.head(10))  # 只取最近10場比賽的數據來畫圖
     st.pyplot(fig) # 在 Streamlit 網頁顯示 Matplotlib 圖表
 
 except Exception as e:
     st.error(f"cooked , you got an error")
-
 
 
