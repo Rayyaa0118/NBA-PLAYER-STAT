@@ -33,15 +33,18 @@ def visualize(df):                                         #設一個參數df，
 try:
     data = load_data()
     
-    st.subheader("Latest match data review")
-    st.dataframe(data) 
-    
-    # 展示視覺化圖表
-    st.subheader("PPM and BLK Trend Chart")
-    fig = visualize(data.head(10))  # 只取最近10場比賽的數據來畫圖
-    st.pyplot(fig) # 在 Streamlit 網頁顯示 Matplotlib 圖表
+    if not data.empty:
+        st.subheader("Latest match data review")
+        st.dataframe(data.head(5)) 
+        
+        st.subheader("PPM and BLK Trend Chart")
+        fig = visualize(data.head(10))  
+        st.pyplot(fig) 
+    else:
+
+        st.warning("資料庫目前是空的，請確認 ppp.py 是否已成功執行並產生 wemby_data.db！")
 
 except Exception as e:
-    st.error(f"cooked , you got an error")
+    st.error(f"目前網頁發生錯誤: {e}")
 
 
